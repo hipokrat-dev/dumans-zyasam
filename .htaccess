@@ -4,4 +4,4 @@ RewriteEngine On
 RewriteRule (^|/)\. - [F,L]
 RewriteRule ^(app|database|tests|scripts)(/|$) - [F,L,NC]
 RewriteRule ^(config[^/]*\.php|README\.md|package[^/]*\.json|.*\.sql)$ - [F,L,NC]
-RewriteRule ^((?:admin|setup)\.php|assets/.*|uploads/.*)$ public/$1 [L]
+RewriteRule ^((?:admin|setup|rehber)\.php|assets/.*|uploads/.*)$ public/$1 [L]
