@@ -1,0 +1,6 @@
+config.local.php
+public/uploads/*
+!public/uploads/.htaccess
+.env
+*.log
+.DS_Store

@@ -1,0 +1,10 @@
+const fs=require('node:fs');const vm=require('node:vm');const assert=require('node:assert/strict');
+const elements={daily:{value:'20',checkValidity(){return Number(this.value)>=0},addEventListener(){}},price:{value:'100',checkValidity(){return Number(this.value)>=0},addEventListener(){}},yearly:{},monthly:{},fiveYears:{}};
+const context=vm.createContext({Intl,document:{querySelector:s=>elements[s.slice(1)]||null,getElementById:id=>elements[id]}});
+vm.runInContext(fs.readFileSync('public/assets/app.js','utf8'),context);
+assert.equal(elements.yearly.textContent,'₺36.500');
+elements.daily.value='10';vm.runInContext('calculate()',context);assert.equal(elements.yearly.textContent,'₺18.250');
+elements.daily.value='';vm.runInContext('calculate()',context);assert.equal(elements.yearly.textContent,'—');
+elements.daily.value='0';vm.runInContext('calculate()',context);assert.equal(elements.yearly.textContent,'₺0');
+elements.daily.value='-1';vm.runInContext('calculate()',context);assert.equal(elements.yearly.textContent,'—');
+console.log('Calculator checks passed');

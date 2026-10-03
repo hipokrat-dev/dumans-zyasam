@@ -1,0 +1,14 @@
+name: Check PHP and browser code
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate PHP
+        run: find app public tests -name '*.php' -print0 | xargs -0 -n1 php -l
+      - run: php tests/check.php
+      - run: node --check public/assets/app.js
+      - run: node tests/calculator.cjs
