@@ -3,7 +3,8 @@ declare(strict_types=1);
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 header("Content-Security-Policy: default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'");
-$configFile = dirname(__DIR__) . '/config.local.php';
+$privateConfig = dirname(__DIR__, 2) . '/dumansiz-config.php';
+$configFile = is_file($privateConfig) ? $privateConfig : dirname(__DIR__) . '/config.local.php';
 $config = is_file($configFile) ? require $configFile : [];
 function db(): ?PDO {
     global $config;
