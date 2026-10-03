@@ -36,3 +36,9 @@ Resmi rehber: https://www.hostinger.com/support/1583302-how-to-deploy-a-git-repo
 ## Yayın doğrulaması
 
 HTTPS ana sayfa ve `/admin.php`; kaydet-yenile kalıcılığı; gerçek video/ses; mobil görünüm; maliyet hesabı; hatalı giriş/CSRF; `/config.local.php`, `/.git/config` ve `/database/schema.sql` için 403 kontrol edin. Yedeklemelerde MySQL ile yüklenen medyayı birlikte saklayın.
+
+## Bursa poliklinik rehberi
+
+`public/poliklinikler.php` 16 merkezi listeler; kaynaklı kurum verileri `app/clinics.php` içindedir. ALO 171 Bursa listesinin 15 kaydı ve Bursa Şehir Hastanesi bulunur. Kaynak kontrol tarihi 3 Ekim 2026; telefonla teyit yapılmamıştır. Kaynaklarda çelişen adresler ilgili kartların notlarında açıklanır. Yeni bir kayıt eklerken sigara bırakma hizmeti kaynağı, kurum telefonu, adres ve ilçe birlikte doğrulanmalıdır. Tüm Bursa birimlerinin eksiksiz ve sürekli güncel olduğu iddia edilmez.
+
+İlçe filtresi ve Türkçe / ASCII karakterlerle arama tarayıcıda çalışır. JavaScript kapalıyken bütün kartlar görünür. Google Haritalar ve yol tarifi bağlantıları kurum + adresle açılır; ziyaretçinin konumu istenmez.
