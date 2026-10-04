@@ -1,6 +1,6 @@
 <?php require_once dirname(__DIR__).'/app/bootstrap.php'; $s=settings(); ?>
 <!doctype html>
-<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Dumansız Yaşam — Özgürlüğün bir nefes uzağında</title><meta name="description" content="Dumansız bir hayata açılan kapı. Özgürlüğünü yeniden keşfet."><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/cinema.css?v=4"><link rel="stylesheet" href="assets/media.css?v=2"><script src="assets/app.js?v=2" defer></script></head>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Dumansız Yaşam — Özgürlüğün bir nefes uzağında</title><meta name="description" content="Dumansız bir hayata açılan kapı. Özgürlüğünü yeniden keşfet."><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/cinema.css?v=4"><link rel="stylesheet" href="assets/media.css?v=2"><script src="assets/app.js?v=3" defer></script></head>
 <body class="cinema"><main class="screen" aria-label="Dumansız Yaşam">
 <?php if($s['video']): ?><video class="film" id="heroVideo" autoplay muted loop playsinline preload="auto" aria-label="<?=e($s['headline'])?>" aria-description="<?=e($s['intro'])?>"><source src="<?=e($s['video'])?>"></video><?php endif; ?>
 <div class="vignette" aria-hidden="true"></div>

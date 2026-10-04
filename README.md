@@ -22,7 +22,7 @@ Hedef: https://lavenderblush-llama-450679.hostingersite.com/
 2. hPanel → Veritabanları → Yönetici: bu siteye özel veritabanı ve kullanıcı oluşturun. phpMyAdmin SQL bölümünde `database/schema.sql` içeriğini çalıştırın. Şema mevcut verileri silmez; dağıtımlar otomatik şema sıfırlamaz.
 3. Bu alan adı için `/setup.php` ekranı kullanılabilir: veritabanı şifresini ve yeni yönetici şifresini site sahibi girer. Ekran sabit `u149068033_dumansiz` kullanıcısını doğrular, web kökü dışındaki `../dumansiz-config.php` dosyasını oluşturur ve kendini kapatır. Otomatik dağıtım bu özel dosyayı değiştirmez. Başka bir hostta elle kurulum için `config.example.php` dosyasını `config.local.php` olarak site köküne kopyalayın, gerçek MySQL bilgilerini ve `password_hash` ile üretilmiş yönetici parola özetini yazın. Bu dosya Git tarafından yok sayılır, HTTP erişimi `.htaccess` ile engellenir. Gerçek şifreleri GitHub'a yüklemeyin. Daha güçlü ayrım için web kökünü `public/` olarak ayarlayın; diğer dosyalar web kökü dışında kalır.
 4. `public/uploads` PHP tarafından yazılabilir olmalı (normalde 755; 777 kullanmayın). `.user.ini` yükleme limitlerini sağlar; hPanel limitleri daha düşükse 50 MB upload / 105 MB post olarak ayarlayın.
-5. HTTPS ile `/admin.php` adresine girin, ana başlık/açıklama ve medya dosyalarını kaydedin. Video MP4/WebM; ses MP3/OGG/WAV. Dosyalar 50 MB ile sınırlandırılmış, MIME türleri sunucuda doğrulanır. Videonun ilk 15 saniyesi döner. Ses 2,5 saniye sonra başlamayı dener, otomatik oynatma engellenirse kullanıcı düğmeye basar.
+5. HTTPS ile `/admin.php` adresine girin, ana başlık/açıklama ve medya dosyalarını kaydedin. Video MP4/WebM; ses MP3/OGG/WAV. Dosyalar 50 MB ile sınırlandırılmış, MIME türleri sunucuda doğrulanır. Videonun ilk 15 saniyesi döner. Ses sayfa açılır açılmaz başlamayı dener, otomatik oynatma engellenirse kullanıcı düğmeye basar.
 6. hPanel'de Git otomatik dağıtımı etkin bırakın. `main` dalına gönderilen kod değişiklikleri otomatik yayınlanır. Bu işleyiş Hostinger'in Git entegrasyonudur; GitHub Actions yalnızca kontrolleri çalıştırır. Başarısız kontrollerin yayını engellemesi için main dalına uygun koruma kuralı konmalıdır.
 7. Her yayında `config.local.php` ve `public/uploads` korunmalıdır. Hostinger dağıtımı temiz klasörle değiştiriyorsa bunları web kökü dışındaki kalıcı konuma taşıyıp yapılandırmayı uyarlamadan otomatik dağıtımı açmayın. İlk kurulumda bunu bir test yüklemesi ve yeniden dağıtımla doğrulayın.
 
@@ -47,7 +47,7 @@ HTTPS ana sayfa ve `/admin.php`; kaydet-yenile kalıcılığı; gerçek video/se
 
 ## Ses ve medya kontrolleri
 
-Kullanıcının 4 Ekim 2026 tarihli MP3 dosyası `public/assets/media/ambience.mp3` içinde varsayılan sestir. Panelden yüklenen ses varsa önceliklidir. Ses 2,5 saniye sonra başlamayı dener; tarayıcı engellerse erişilebilir hoparlör simgesiyle açılır. Video duraklatma düğmesi kaldırılmıştır. Hareket azaltma tercihi olan ziyaretçilerde video durdurulur.
+Kullanıcının 4 Ekim 2026 tarihli MP3 dosyası `public/assets/media/ambience.mp3` içinde varsayılan sestir. Panelden yüklenen ses varsa önceliklidir. Ses sayfa açılır açılmaz başlamayı dener; tarayıcı engellerse erişilebilir hoparlör simgesiyle açılır. Video duraklatma düğmesi kaldırılmıştır. Hareket azaltma tercihi olan ziyaretçilerde video durdurulur.
 
 Bursa sayfasında ilçe ve merkez seçimi tek kartı günceller. Kurum iletişim verileri tasarım güncellemesinde değiştirilmemiştir.
 
