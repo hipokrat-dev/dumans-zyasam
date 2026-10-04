@@ -2,16 +2,37 @@
  const tabs=[...document.querySelectorAll('[data-category][role=tab]')];
  const templates=[...document.querySelectorAll('template[data-id]')];
  const topic=document.querySelector('#topic'),content=document.querySelector('#topic-content');
- let selectedCategory=tabs[0]?.dataset.category,available=[];
+ let selectedCategory=tabs[0]?.dataset.category,available=[],playbackVolume=1;
+ const studioStatus=document.querySelector('#studio-status');
+ function setStudioPlaying(playing){document.body.classList.toggle('is-listening',playing);if(studioStatus)studioStatus.textContent=playing?'ŞİMDİ DİNLİYORSUN':'DİNLEMEYE HAZIR';}
+ function formatTime(seconds){if(!Number.isFinite(seconds))return '0:00';return `${Math.floor(seconds/60)}:${String(Math.floor(seconds%60)).padStart(2,'0')}`;}
+
  function stopMedia(){document.querySelectorAll('#topic-content audio,#topic-content video').forEach(media=>media.pause());}
  function render(){
-  stopMedia();content.replaceChildren();const template=available[topic.selectedIndex];
+  stopMedia();setStudioPlaying(false);content.replaceChildren();const template=available[topic.selectedIndex];
   if(template)content.append(template.content.cloneNode(true));else{const p=document.createElement('p');p.textContent='Bu bölüme henüz başlık eklenmedi.';content.append(p);}
   const dialog=content.querySelector('.topic-video-dialog');if(dialog){content.querySelector('.topic-video-open').addEventListener('click',()=>{stopMedia();dialog.showModal();});content.querySelector('.topic-video-close').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',stopMedia);}
+  const audio=content.querySelector('audio');if(audio&&document.body.classList.contains('studio-page'))enhanceAudio(audio);
   const media=[...content.querySelectorAll('audio,video')];media.forEach(item=>item.addEventListener('play',()=>media.filter(other=>other!==item).forEach(other=>other.pause())));
   document.querySelector('#topic-count').textContent=available.length?`${topic.selectedIndex+1} / ${available.length}`:'0 / 0';
   document.querySelector('#topic-prev').disabled=topic.selectedIndex<=0;
   document.querySelector('#topic-next').disabled=topic.selectedIndex>=available.length-1;
+ }
+ function enhanceAudio(audio){
+  audio.volume=playbackVolume;audio.muted=playbackVolume===0;
+  const player=document.createElement('div');player.className='studio-player';
+  player.innerHTML='<div class="player-main"><button class="studio-play" type="button" aria-label="Ses kaydını oynat"><span aria-hidden="true">▶</span></button><div class="player-display"><div class="studio-wave" aria-hidden="true">'+Array.from({length:28},()=>'<i></i>').join('')+'</div><div class="player-times"><span class="elapsed">0:00</span><span class="duration">0:00</span></div></div></div><input class="studio-seek" type="range" min="0" max="100" step="0.1" value="0" disabled aria-label="Ses kaydında ilerle"><div class="player-bottom"><span class="player-hint" role="status">Dinlemek için oynat</span><label class="studio-volume"><span>Ses</span><input type="range" min="0" max="1" step="0.05" value="1" aria-label="Ses düzeyi"></label></div>';
+  const play=player.querySelector('.studio-play'),seek=player.querySelector('.studio-seek'),volume=player.querySelector('.studio-volume input'),hint=player.querySelector('.player-hint');
+  volume.value=String(playbackVolume);
+  function update(){const duration=audio.duration;seek.disabled=!Number.isFinite(duration)||duration<=0;seek.max=seek.disabled?100:duration;seek.value=audio.currentTime;seek.setAttribute('aria-valuetext',formatTime(audio.currentTime)+' / '+formatTime(duration));player.querySelector('.elapsed').textContent=formatTime(audio.currentTime);player.querySelector('.duration').textContent=formatTime(duration);}
+  function state(){const playing=!audio.paused&&!audio.ended;play.setAttribute('aria-label',playing?'Ses kaydını duraklat':'Ses kaydını oynat');play.querySelector('span').textContent=playing?'Ⅱ':'▶';player.classList.toggle('playing',playing);setStudioPlaying(playing);hint.textContent=playing?'Şimdi kendine kulak ver':audio.ended?'Bölüm tamamlandı':'Dinlemek için oynat';}
+  play.addEventListener('click',async()=>{if(!audio.paused){audio.pause();return;}try{await audio.play();}catch{state();hint.textContent='Ses açılamadı. Yeniden deneyebilirsin.';}});
+  seek.addEventListener('input',()=>{if(Number.isFinite(audio.duration))audio.currentTime=Number(seek.value);update();});
+  volume.addEventListener('input',()=>{playbackVolume=Number(volume.value);audio.volume=playbackVolume;audio.muted=playbackVolume===0;});
+  ['loadedmetadata','durationchange','timeupdate'].forEach(name=>audio.addEventListener(name,update));
+  ['play','pause','ended'].forEach(name=>audio.addEventListener(name,state));
+  audio.addEventListener('error',()=>{state();hint.textContent='Ses dosyası yüklenemedi.';});
+  audio.after(player);audio.controls=false;audio.hidden=true;update();state();
  }
  function chooseCategory(key){
   selectedCategory=key;available=templates.filter(t=>t.dataset.category===key);
