@@ -59,7 +59,7 @@ Poliklinikler artık tek kart üzerinde gösterilir. İlçe seçimi merkez menü
 
 ## Seçmeli keşif ve etki ekranları
 
-`rehber.php` tek ekranda Tetikleyiciler, Nikotinin Yalanları ve Motivasyon seçim kartlarını sunar. Her sekmede bir başlık seçilir; başlığın hemen altında ses, kısa açıklama ve isteğe bağlı video bulunur. Başlık veya sekme değişince önceki medya durur. Dokuz başlangıç başlığı sunulur; konu sesleri yönetimden eklenene kadar yüklenmediği belirtilir.
+`rehber.php` tek ekranda Nikotin Yalanları ve Hayatın Gerçekleri seçim kartlarını sunar. Her sekmede bir başlık seçilir; başlığın hemen altında ses, kısa açıklama ve isteğe bağlı video bulunur. Başlık veya sekme değişince önceki medya durur. Dokuz başlangıç başlığı sunulur; konu sesleri yönetimden eklenene kadar yüklenmediği belirtilir.
 
 `etkiler.php` Para / Sağlık / Zaman seçimlerini ve günlük paket, yıl, fiyat kontrollerini içerir. Para bugünkü sabit fiyatla hesaplanır; her çuval 25.000 TL, çizim sınırı 18 çuvaldır ve fazlası sayıyla gösterilir. Zaman sigara içmeye ayrılan dakikadır, yaşam süresi kaybı değildir. Paket-yıla göre koyulaşan ve nefes hareketi yapan akciğer tıbbi tahmin değil, açıkça işaretlenmiş temsili animasyondur. Formüller ve CDC kaynakları isteğe bağlı pencerededir. Ziyaretçi girdileri saklanmaz.
 
@@ -70,3 +70,5 @@ Admin içerik stüdyosunda ana sayfa medya/metinleri ve üç kategori düzenleni
 `admin.php` giriş ekranındaki “Şifremi unuttum” bağlantısı `sifre-yenile.php` formunu açar. Site sahibi mevcut Hostinger veritabanı şifresini doğrular ve yeni yönetici şifresini kendisi girer. Form HTTPS, CSRF ve sunucu genelinde beş denemeden sonra 15 dakika bekleme ile korunur. Veritabanı bağlantısı korunarak yalnızca yönetici şifresinin özeti, özel yapılandırma dosyasına atomik olarak yazılır. Dosya izinleri 0600 kalır. Şifre değişikliğinde eski yönetici oturumları geçersizleşir. Giriş denemesi kilidi IP ve şifre özeti sürümüne bağlıdır; doğrulanmış şifre yenileme sonrası eski kilit yeni şifreyi engellemez. Veritabanı şifresi de unutulduysa bu form doğrulama yapamaz; Hostinger hesabı üzerinden sahiplik doğrulanarak ayrıca kurtarma gerekir.
 
 `php tests/recovery.php` yanlış doğrulama, şifre kuralları, atomik yapılandırma koruması ve yeni şifre özetini test eder.
+
+Keşfet ekranında yalnızca `kancalar` ve `motivasyon` kategorileri gösterilir. Eski Tetikleyiciler kayıtları ve medya bağlantıları yönetimde korunur; ziyaretçi ekranında gösterilmez. Kategori kimlikleri değişmediği için mevcut başlıklar ve yüklemeler korunur.
