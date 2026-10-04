@@ -18,11 +18,12 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
  else try {
   $action=$_POST['action']??'';
   if($action==='login') {
-   $key=hash('sha256',$_SERVER['REMOTE_ADDR']??'unknown');
+   // Attempts belong to this password version; a verified reset clears the old lock.
+   $key=hash('sha256',($_SERVER['REMOTE_ADDR']??'unknown').'|'.hash('sha256',$config['admin_password_hash']));
    $pdo->prepare('INSERT IGNORE INTO login_attempts (key_hash) VALUES (?)')->execute([$key]);
    $pdo->beginTransaction();
    $q=$pdo->prepare('SELECT attempts, locked_until FROM login_attempts WHERE key_hash=? FOR UPDATE');$q->execute([$key]);$attempt=$q->fetch(PDO::FETCH_ASSOC);
-   if((int)$attempt['locked_until']>time()){$pdo->commit();$message='Çok fazla deneme. 15 dakika sonra tekrar deneyin.';http_response_code(429);}
+   if((int)$attempt['locked_until']>time()){$pdo->commit();$minutes=(int)ceil(((int)$attempt['locked_until']-time())/60);$message='Çok fazla deneme. '.$minutes.' dakika sonra tekrar deneyin.';http_response_code(429);}
    elseif(password_verify((string)($_POST['password']??''),$config['admin_password_hash'])) {
     $pdo->prepare('DELETE FROM login_attempts WHERE key_hash=?')->execute([$key]);$pdo->commit();
     session_regenerate_id(true);$_SESSION['admin']=true;$_SESSION['auth_version']=hash('sha256',$config['admin_password_hash']);$_SESSION['last_seen']=time();$_SESSION['csrf']=bin2hex(random_bytes(32));header('Location: admin.php');exit;
