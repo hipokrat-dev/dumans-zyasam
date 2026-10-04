@@ -48,3 +48,9 @@ HTTPS ana sayfa ve `/admin.php`; kaydet-yenile kalıcılığı; gerçek video/se
 Kullanıcının 4 Ekim 2026 tarihli MP3 dosyası `public/assets/media/ambience.mp3` içinde varsayılan sestir. Panelden yüklenen ses varsa önceliklidir. Ses 2,5 saniye sonra başlamayı dener; tarayıcı engellerse erişilebilir hoparlör simgesiyle açılır. Video duraklatma düğmesi kaldırılmıştır. Hareket azaltma tercihi olan ziyaretçilerde video durdurulur.
 
 Bursa sayfasında kurum türü + ilçe + arama birlikte çalışır; hızlı ilçe seçimi, kart/liste görünümü ve mobil tek sütun düzeni vardır. Kurum iletişim verileri bu tasarım güncellemesinde değiştirilmemiştir.
+
+## Seçmeli Bursa arayüzü
+
+Poliklinikler artık tek kart üzerinde gösterilir. İlçe seçimi merkez menüsünü günceller; merkez menüsü ve önceki/sonraki düğmeleri adres, telefon, not ve harita bağlantılarını birlikte değiştirir. Kaynak açıklaması erişilebilir bir dialog içindedir. JavaScript olmadan GET formu seçilen merkezi sunucuda gösterir.
+
+3D katmanlar ve geçiş efektleri CSS ile çizilir. Hassas fare işaretçisinde hafif eğim uygulanır; dokunmatik cihazlarda eğim devre dışıdır, hareket azaltma tercihinde animasyonlar kapatılır.
