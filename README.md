@@ -59,7 +59,7 @@ Poliklinikler artık tek kart üzerinde gösterilir. İlçe seçimi merkez menü
 
 ## Seçmeli keşif ve etki ekranları
 
-`rehber.php` tek ekranda Tetikleyiciler, Kancalar ve Motivasyon sekmelerini sunar. Her sekmede bir başlık seçilir; başlığın hemen altında ses, kısa açıklama ve isteğe bağlı video bulunur. Başlık veya sekme değişince önceki medya durur. Dokuz başlangıç başlığı sunulur; konu sesleri yönetimden eklenene kadar yüklenmediği belirtilir.
+`rehber.php` tek ekranda Tetikleyiciler, Nikotinin Yalanları ve Motivasyon seçim kartlarını sunar. Her sekmede bir başlık seçilir; başlığın hemen altında ses, kısa açıklama ve isteğe bağlı video bulunur. Başlık veya sekme değişince önceki medya durur. Dokuz başlangıç başlığı sunulur; konu sesleri yönetimden eklenene kadar yüklenmediği belirtilir.
 
 `etkiler.php` Para / Sağlık / Zaman seçimlerini ve günlük paket, yıl, fiyat kontrollerini içerir. Para bugünkü sabit fiyatla hesaplanır; her çuval 25.000 TL, çizim sınırı 18 çuvaldır ve fazlası sayıyla gösterilir. Zaman sigara içmeye ayrılan dakikadır, yaşam süresi kaybı değildir. Paket-yıla göre koyulaşan ve nefes hareketi yapan akciğer tıbbi tahmin değil, açıkça işaretlenmiş temsili animasyondur. Formüller ve CDC kaynakları isteğe bağlı pencerededir. Ziyaretçi girdileri saklanmaz.
 

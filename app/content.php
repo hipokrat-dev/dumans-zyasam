@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-function content_categories(): array { return ['tetikleyiciler'=>'Tetikleyiciler','kancalar'=>'Kancalar','motivasyon'=>'Motivasyon']; }
+function content_categories(): array { return ['tetikleyiciler'=>'Tetikleyiciler','kancalar'=>'Nikotinin Yalanları','motivasyon'=>'Motivasyon']; }
 function default_content(): array {
  return [
  ['id'=>'kahve','category'=>'tetikleyiciler','title'=>'Kahve aynı. Seçimin yeni.','text'=>'Bir fincan kahvenin keyfi sigaraya ait değil. Bu molayı kendin için yeniden tanımla.','audio'=>'','video'=>''],
