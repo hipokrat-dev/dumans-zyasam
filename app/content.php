@@ -39,7 +39,7 @@ function receive_media(string $field,string $kind,array &$moved): ?string {
  if(!isset($_FILES[$field])||$_FILES[$field]['error']===UPLOAD_ERR_NO_FILE)return null;
  $f=$_FILES[$field];
  if(!is_int($f['error'])||$f['error']!==UPLOAD_ERR_OK||$f['size']>50*1024*1024)throw new RuntimeException('Dosya yüklenemedi. En fazla 50 MB kullanın.');
- $types=$kind==='audio'?['audio/mpeg'=>'mp3','audio/ogg'=>'ogg','audio/wav'=>'wav','audio/x-wav'=>'wav']:['video/mp4'=>'mp4','video/webm'=>'webm'];
+ $types=$kind==='image'?['image/png'=>'png','image/jpeg'=>'jpg','image/webp'=>'webp']:($kind==='audio'?['audio/mpeg'=>'mp3','audio/ogg'=>'ogg','audio/wav'=>'wav','audio/x-wav'=>'wav']:['video/mp4'=>'mp4','video/webm'=>'webm']);
  $mime=(new finfo(FILEINFO_MIME_TYPE))->file($f['tmp_name']);
  if(!isset($types[$mime]))throw new RuntimeException('Desteklenmeyen medya biçimi.');
  $path='uploads/'.bin2hex(random_bytes(16)).'.'.$types[$mime];

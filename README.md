@@ -72,3 +72,7 @@ Admin içerik stüdyosunda ana sayfa medya/metinleri ve üç kategori düzenleni
 `php tests/recovery.php` yanlış doğrulama, şifre kuralları, atomik yapılandırma koruması ve yeni şifre özetini test eder.
 
 Keşfet ekranında yalnızca `kancalar` ve `motivasyon` kategorileri gösterilir. Eski Tetikleyiciler kayıtları ve medya bağlantıları yönetimde korunur; ziyaretçi ekranında gösterilmez. Kategori kimlikleri değişmediği için mevcut başlıklar ve yüklemeler korunur.
+
+## Görselli açılış ekranı
+
+Ana sayfa video veya ses oynatmaz; kullanıcı görseli `assets/media/freedom-key.png` orijinal 1448×1086 çözünürlükte gösterilir. Slogan “Özgürlüğünün anahtarı senin elinde.” şeklindedir. Yönetimde Ana sayfa bölümünden iki slogan satırı ve PNG/JPG/WebP görsel güncellenebilir. Önceden yüklenen video ve sesler silinmez, ancak açılış ekranında kullanılmaz. Bölüm sesleri çalışmaya devam eder.
