@@ -8,9 +8,11 @@ Türkçe, mobil uyumlu sigara bırakma farkındalık sitesi. PHP 8.2+ ve Hosting
 php -S 127.0.0.1:8085 -t public
 php tests/check.php
 node tests/calculator.cjs
+php tests/content.php
+node tests/impact.cjs
 ```
 
-Veritabanı yapılandırılmadan ana sayfa varsayılan metinlerle çalışır, yönetim kapalıdır. Gerçek video/ses depoda bulunmaz; yönetimden yüklenir. Dosya yokken tasarlanmış hareketli arka plan gösterilir. Hesap makinesi verileri cihazda işlenir, saklanmaz.
+Veritabanı yapılandırılmadan ana sayfa varsayılan metinlerle çalışır, yönetim kapalıdır. Açılış videosu yönetimden yüklenir; varsayılan ses depodadır. Dosya yokken tasarlanmış hareketli arka plan gösterilir. Hesap makinesi verileri cihazda işlenir, saklanmaz.
 
 ## Hostinger Business kurulumu
 
@@ -41,16 +43,24 @@ HTTPS ana sayfa ve `/admin.php`; kaydet-yenile kalıcılığı; gerçek video/se
 
 `public/poliklinikler.php` 16 merkezi listeler; kaynaklı kurum verileri `app/clinics.php` içindedir. ALO 171 Bursa listesinin 15 kaydı ve Bursa Şehir Hastanesi bulunur. Kaynak kontrol tarihi 3 Ekim 2026; telefonla teyit yapılmamıştır. Kaynaklarda çelişen adresler ilgili kartların notlarında açıklanır. Yeni bir kayıt eklerken sigara bırakma hizmeti kaynağı, kurum telefonu, adres ve ilçe birlikte doğrulanmalıdır. Tüm Bursa birimlerinin eksiksiz ve sürekli güncel olduğu iddia edilmez.
 
-İlçe filtresi ve Türkçe / ASCII karakterlerle arama tarayıcıda çalışır. JavaScript kapalıyken bütün kartlar görünür. Google Haritalar ve yol tarifi bağlantıları kurum + adresle açılır; ziyaretçinin konumu istenmez.
+İlçe ve merkez seçimi tarayıcıda çalışır. JavaScript kapalıyken GET formu seçilen merkezi gösterir. Google Haritalar ve yol tarifi bağlantıları kurum + adresle açılır; ziyaretçinin konumu istenmez.
 
 ## Ses ve medya kontrolleri
 
 Kullanıcının 4 Ekim 2026 tarihli MP3 dosyası `public/assets/media/ambience.mp3` içinde varsayılan sestir. Panelden yüklenen ses varsa önceliklidir. Ses 2,5 saniye sonra başlamayı dener; tarayıcı engellerse erişilebilir hoparlör simgesiyle açılır. Video duraklatma düğmesi kaldırılmıştır. Hareket azaltma tercihi olan ziyaretçilerde video durdurulur.
 
-Bursa sayfasında kurum türü + ilçe + arama birlikte çalışır; hızlı ilçe seçimi, kart/liste görünümü ve mobil tek sütun düzeni vardır. Kurum iletişim verileri bu tasarım güncellemesinde değiştirilmemiştir.
+Bursa sayfasında ilçe ve merkez seçimi tek kartı günceller. Kurum iletişim verileri tasarım güncellemesinde değiştirilmemiştir.
 
 ## Seçmeli Bursa arayüzü
 
 Poliklinikler artık tek kart üzerinde gösterilir. İlçe seçimi merkez menüsünü günceller; merkez menüsü ve önceki/sonraki düğmeleri adres, telefon, not ve harita bağlantılarını birlikte değiştirir. Kaynak açıklaması erişilebilir bir dialog içindedir. JavaScript olmadan GET formu seçilen merkezi sunucuda gösterir.
 
 3D katmanlar ve geçiş efektleri CSS ile çizilir. Hassas fare işaretçisinde hafif eğim uygulanır; dokunmatik cihazlarda eğim devre dışıdır, hareket azaltma tercihinde animasyonlar kapatılır.
+
+## Seçmeli keşif ve etki ekranları
+
+`rehber.php` tek ekranda Tetikleyiciler, Kancalar ve Motivasyon sekmelerini sunar. Her sekmede bir başlık seçilir; başlığın hemen altında ses, kısa açıklama ve isteğe bağlı video bulunur. Başlık veya sekme değişince önceki medya durur. Dokuz başlangıç başlığı sunulur; konu sesleri yönetimden eklenene kadar yüklenmediği belirtilir.
+
+`etkiler.php` Para / Sağlık / Zaman seçimlerini ve günlük paket, yıl, fiyat kontrollerini içerir. Para bugünkü sabit fiyatla hesaplanır; her çuval 25.000 TL, çizim sınırı 18 çuvaldır ve fazlası sayıyla gösterilir. Zaman sigara içmeye ayrılan dakikadır, yaşam süresi kaybı değildir. Paket-yıla göre koyulaşan ve nefes hareketi yapan akciğer tıbbi tahmin değil, açıkça işaretlenmiş temsili animasyondur. Formüller ve CDC kaynakları isteğe bağlı pencerededir. Ziyaretçi girdileri saklanmaz.
+
+Admin içerik stüdyosunda ana sayfa medya/metinleri ve üç kategori düzenlenir. En fazla 24 konu, 70 karakter başlık ve isteğe bağlı 220 karakter açıklama desteklenir. Her konuya ses ve video yüklenebilir veya medya bağlantısı kaldırılabilir. İçerikler mevcut `settings` tablosunda `content_items` JSON kaydına, işlem kilidi ve doğrulama ile yazılır; şema değişikliği gerekmez. Dosya yükleme başarısız olursa işlem geri alınır ve yeni taşınmış dosyalar temizlenir. Başlık kaldırıldığında eski medya dosyaları yedekleme amacıyla tutulur.

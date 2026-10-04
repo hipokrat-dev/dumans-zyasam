@@ -13,3 +13,8 @@ jobs:
       - run: node --check public/assets/app.js
       - run: node --check public/assets/clinics.js
       - run: node tests/calculator.cjs
+      - run: php tests/content.php
+      - run: node tests/impact.cjs
+      - run: node --check public/assets/guide.js
+      - run: node --check public/assets/impact.js
+      - run: node --check public/assets/admin.js

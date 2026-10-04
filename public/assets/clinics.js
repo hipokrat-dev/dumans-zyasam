@@ -13,6 +13,14 @@
     const template = document.querySelector(`#clinic-template-${clinic.value}`);
     if (!template) return;
     stage.replaceChildren(template.content.cloneNode(true));
+    const note=stage.querySelector('.clinic-note');
+    if(note){
+      const button=document.createElement('button');button.type='button';button.className='note-button';button.textContent='Başvuru ve adres notu ↗';
+      const details=document.createElement('dialog');details.className='clinic-note-dialog';details.setAttribute('aria-label','Başvuru ve adres notu');
+      [...note.children].filter(el=>el.tagName!=='SUMMARY').forEach(el=>details.append(el.cloneNode(true)));
+      const close=document.createElement('button');close.type='button';close.textContent='Kapat';close.addEventListener('click',()=>details.close());details.append(close);
+      button.addEventListener('click',()=>details.showModal());note.replaceWith(button,details);
+    }
     if (animate && !reducedMotion.matches) {
       stage.classList.remove('enter');
       void stage.offsetWidth;
