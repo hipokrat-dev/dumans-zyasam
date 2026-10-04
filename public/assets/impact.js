@@ -17,8 +17,8 @@
    const clip=svg('clipPath',{id:`bag-clip-${i}`});clip.append(svg('path',{d:bagPath}));
    g.append(clip,svg('path',{d:bagPath,fill:'url(#bag-body)',stroke:'#ddbf86','stroke-width':1}));
    const contents=svg('g',{'clip-path':`url(#bag-clip-${i})`});contents.append(svg('rect',{x:0,y:105-fill*80,width:80,height:fill*80,fill:'url(#bag-money)',opacity:.92}));
-   for(let j=0;j<7;j++)contents.append(svg('path',{d:`M${12+j%3*19} ${100-fill*68+j*3}h14v7h-14Z`,fill:'none',stroke:'#e7edb7','stroke-width':1,opacity:fill}));
-   const symbol=svg('text',{x:40,y:75,'text-anchor':'middle',fill:'#314a28','font-size':25,'font-family':'Georgia'});symbol.textContent='₺';
+   for(let j=0;j<7;j++)contents.append(svg('path',{d:`M${12+j%3*19} ${100-fill*68+j*3}h14v7h-14Z`,fill:'none',stroke:'#fff0ca','stroke-width':1,opacity:fill}));
+   const symbol=svg('text',{x:40,y:75,'text-anchor':'middle',fill:'#654122','font-size':25,'font-family':'Georgia'});symbol.textContent='₺';
    g.append(contents,svg('path',{d:'M28 23Q40 29 52 23M28 27Q40 33 52 27',fill:'none',stroke:'#745634','stroke-width':3}),symbol);$('#bags').append(g);
   }
   $('#bag-overflow').textContent=count>18?`+ ${format(count-18)} çuval`:(count===0?'Henüz harcama yok':`${format(count)} çuval`);

@@ -1,0 +1,78 @@
+/* Charcoal, warm ivory, amber and terracotta. */
+:root{--lime:#f0bd78;--muted:#c1b7ad;background:#17191f;color:#fff3e5}
+body.relief-surface{color:#fff3e5;background-color:#17191f;background-image:radial-gradient(ellipse at 90% 12%,#bb745227,transparent 55%),radial-gradient(ellipse at 10% 90%,#e9bc7014,transparent 60%),url('words-relief.svg?v=2');background-size:100% 100%,100% 100%,1500px 1000px;background-position:center;background-repeat:no-repeat,no-repeat,repeat}
+.relief-surface .app-header,.relief-surface .site-header{background:#17191fdf;border-color:#f0bd7826}
+.relief-surface .app-header nav a,.relief-surface .site-header nav a{color:#eee3d7}
+.relief-surface .app-header nav a:hover,.relief-surface .site-header nav a:hover{background:#f0bd7817}
+.relief-surface .app-header nav a.active,.relief-surface .site-header nav a.active{background:#f3ddbb;color:#29231e;border-color:#ffe6c0;box-shadow:0 4px 18px #0003}
+.relief-surface .app-footer,.relief-surface>footer{background:#17191fc9;border-color:#f0bd7826;color:#d3c4b4}
+.relief-surface footer p,.relief-surface footer button{color:#c7b7a6}
+.relief-surface .brand{color:#fff7ec}
+.relief-surface h1 em{color:#f0bd78}
+.relief-surface .eyebrow,.relief-surface .viewer-label{color:#e6b782}
+.relief-surface .eyebrow>span,.relief-surface .viewer-label i{background:#f0bd78;box-shadow:0 0 0 5px #f0bd7812}
+.relief-surface .intro,.relief-surface .selection-footer,.relief-surface .viewer-top,.relief-surface .viewer-bottom p,.relief-surface .viewer-bottom p>span{color:#cbbdb0}
+.relief-surface .selector-form label,.relief-surface .guide-content .small-label{color:#f3e0c7}
+.relief-surface .selector-form small{color:#c3ac92}
+.relief-surface .selector-form select,.relief-surface .guide-content select{background:#f8ead7;color:#2d2824;border-color:#e3cda9;box-shadow:0 5px 16px #0002;color-scheme:light}
+.relief-surface select:hover{border-color:#f0bd78}
+.relief-surface .step,.relief-surface .help-icon{color:#f0bd78;background:#f0bd7812;border-color:#f0bd7838;box-shadow:0 4px 12px #0003}
+.relief-surface .help-line,.relief-surface .help-line p,.relief-surface .help-line a,.relief-surface .help-line a>span{color:#dec7ad}
+.relief-surface :is(a,button,input,select,summary):focus-visible{outline:3px solid #f0bd78;outline-offset:4px}
+/* Warm cards sit clearly above the dark background. */
+.relief-surface .category-card{background:linear-gradient(135deg,#393038,#25262e);color:#fff0df;border-color:#e79a743d;border-left:4px solid #dc8d70;box-shadow:0 7px 0 #0d1016,0 20px 30px #0004}
+.relief-surface .category-card:hover{box-shadow:0 10px 0 #0d1016,0 25px 35px #0005}
+.relief-surface .category-card[aria-selected=true]{background:linear-gradient(135deg,#fff0d6,#e4b276);color:#31241a;border-color:#f9dba9;box-shadow:0 7px 0 #986b44,0 22px 35px #0005}
+.relief-surface .category-card:before{border-color:#fff3df16}
+.relief-surface.discovery-page .guide-content{background:linear-gradient(145deg,#2f3038f7,#202229f7);border-color:#eac1913b;box-shadow:inset 0 1px 0 #fff2,0 20px 45px #0003}
+.relief-surface #topic-content h2{color:#fff2df}
+.relief-surface #topic-content p{color:#d1c6bb}
+.relief-surface .audio-empty{color:#dec9b2;border-color:#e0b98540;background:#f0bd780c}
+.relief-surface .audio-empty span{color:#f0bd78}
+.relief-surface .topic-pager{color:#d6b99a;border-color:#eac19129}
+.relief-surface .topic-pager button,.relief-surface .pager button{color:#ffe0ae;border-color:#e2b97c59;background:#f0bd7814;box-shadow:0 4px 10px #0002}
+.relief-surface .topic-pager button:hover:enabled,.relief-surface .pager button:hover:enabled{background:#f0bd7838}
+.relief-surface .topic-video-open{color:#f8d6a5;border-color:#eac19166;background:#f0bd7814}
+.relief-surface audio{color-scheme:light}
+.relief-surface .clinic-card{background:linear-gradient(135deg,#fff8eb,#efdfc8);color:#302925;border-color:#fff7e8;box-shadow:inset 0 1px 0 #fff,0 25px 55px #0005,0 2px 3px #fff2}
+.relief-surface .card-stack:before,.relief-surface .card-stack:after{background:linear-gradient(145deg,#bf8967,#60403c);border-color:#dc9d7844;box-shadow:0 25px 35px #0003}
+.relief-surface .clinic-card:after{border-color:#bd885b26;box-shadow:0 0 0 30px #bd885b09}
+.relief-surface .district-tag{background:#edd7bb;color:#63412b;border-color:#ba8b5955}
+.relief-surface .clinic-symbol{background:linear-gradient(145deg,#ffe8c5,#dcb07c);border-color:#f8dba9;box-shadow:3px 5px 0 #b8874d33,5px 9px 15px #76512c18}
+.relief-surface .clinic-symbol svg{stroke:#80542f}
+.relief-surface .clinic-type,.relief-surface .field-label{color:#79634e}
+.relief-surface .address address{color:#625347}
+.relief-surface .address>span{color:#a36d46}
+.relief-surface .phones{background:#dfc29b40;border-color:#ba8b5938}
+.relief-surface .phones a{color:#31251b}
+.relief-surface .phones a>span{color:#9c623b}
+.relief-surface .note-button,.relief-surface .clinic-note,.relief-surface .card-sources{color:#756047}
+.relief-surface .map-link{background:#a84732;color:#fff9f3;border-color:#943b28;box-shadow:0 4px 0 #6f2d20,0 8px 15px #6f2d2020}
+.relief-surface .map-link>span{color:#ffe3b8}
+.relief-surface .map-link:hover{box-shadow:0 6px 0 #6f2d20,0 10px 15px #6f2d2025}
+.relief-surface .directions{color:#83462d}
+.relief-surface .orbit,.relief-surface .ambient{border-color:#e7b17a16;box-shadow:none}
+/* Strong selection and clear values in the cost explorer. */
+.relief-surface .impact-tabs button{color:#ebdbca;border-color:#f0bd783d;background:#f0bd780c}
+.relief-surface .impact-tabs button[aria-selected=true]{background:#f0bd78;color:#2b211a;border-color:#ffdb9f;box-shadow:0 4px 14px #0002}
+.relief-surface .sliders label,.relief-surface .sliders output{color:#efddc8}
+.relief-surface .sliders input[type=range]{accent-color:#efb16e}
+.relief-surface .price-row input{background:#f8ead7;color:#31251c;border-color:#ddba8b;color-scheme:light}
+.relief-surface .price-row label span,.relief-surface .calculation-info{color:#cfb89f;border-color:#b68a5944}
+.relief-surface .impact-support{color:#f2c08a}
+.relief-surface .impact-total{background:radial-gradient(ellipse,#c9814320,transparent 72%)}
+.relief-surface .impact-total>span{color:#e6b785}
+.relief-surface .impact-total output{color:#ffd494;text-shadow:0 4px 28px #e49f3a14}
+.relief-surface .impact-total p,.relief-surface .visual-bottom p,.relief-surface .effect-visual>span{color:#cdbdad}
+.relief-surface .visual-bottom{border-color:#eac19133}
+.relief-surface .live-pill{color:#d4b593}.relief-surface .live-pill i{background:#f0bd78}
+.relief-surface #bag-overflow{background:#f0bd7814;border-color:#eac19133}
+.relief-surface .time-dial{background:radial-gradient(circle at 30% 20%,#f0bd7820,#1e2028);box-shadow:inset 0 2px 3px #fff1,18px 28px 50px #0005}
+.relief-surface .clock-track{stroke:#f0bd7829}.relief-surface #clock-progress,.relief-surface .clock-hands{stroke:#f0bd78}
+.relief-surface .time-dial span{color:#f0bd78}
+.relief-surface dialog{background:#fff3df;color:#382c23;border-color:#e5bc89;box-shadow:0 25px 80px #0008}
+.relief-surface dialog::backdrop{background:#101118cc}
+.relief-surface dialog button{background:#eed4ae;color:#49311f}
+.relief-surface .source-note .eyebrow,.relief-surface .source-note p:not(.eyebrow){color:#75604c}
+@media(max-width:700px){body.relief-surface{background-size:100% 100%,100% 100%,1000px 667px}.relief-surface .category-card{box-shadow:0 4px 0 #0d1016}.relief-surface .category-card[aria-selected=true]{box-shadow:0 4px 0 #986b44,0 12px 20px #0003}}
+@media(prefers-contrast:more){body.relief-surface{background-image:none}}
