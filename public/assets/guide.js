@@ -3,7 +3,12 @@
  const templates=[...document.querySelectorAll('template[data-id]')];
  const topic=document.querySelector('#topic'),content=document.querySelector('#topic-content');
  let selectedCategory=tabs[0]?.dataset.category,available=[],playbackVolume=1;
+ const imageDialog=document.querySelector('#studio-image-dialog');
+ if(imageDialog){document.querySelector('.studio-room-expand').addEventListener('click',()=>imageDialog.showModal());document.querySelector('#studio-image-close').addEventListener('click',()=>imageDialog.close());}
  const studioStatus=document.querySelector('#studio-status');
+ const episodeInfo=document.querySelector('#episode-info'),episodeDialog=document.querySelector('#episode-dialog');
+ if(episodeInfo&&episodeDialog){episodeInfo.addEventListener('click',()=>episodeDialog.showModal());document.querySelector('#episode-dialog-close').addEventListener('click',()=>episodeDialog.close());}
+
  function setStudioPlaying(playing){document.body.classList.toggle('is-listening',playing);if(studioStatus)studioStatus.textContent=playing?'ŞİMDİ DİNLİYORSUN':'DİNLEMEYE HAZIR';}
  function formatTime(seconds){if(!Number.isFinite(seconds))return '0:00';return `${Math.floor(seconds/60)}:${String(Math.floor(seconds%60)).padStart(2,'0')}`;}
 
@@ -11,6 +16,7 @@
  function render(){
   stopMedia();setStudioPlaying(false);content.replaceChildren();const template=available[topic.selectedIndex];
   if(template)content.append(template.content.cloneNode(true));else{const p=document.createElement('p');p.textContent='Bu bölüme henüz başlık eklenmedi.';content.append(p);}
+  if(episodeInfo){episodeInfo.hidden=!template;document.querySelector('#episode-dialog-title').textContent=content.querySelector('h2')?.textContent||'';document.querySelector('#episode-dialog-text').textContent=content.querySelector('article>p')?.textContent||'';}
   const dialog=content.querySelector('.topic-video-dialog');if(dialog){content.querySelector('.topic-video-open').addEventListener('click',()=>{stopMedia();dialog.showModal();});content.querySelector('.topic-video-close').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',stopMedia);}
   const audio=content.querySelector('audio');if(audio&&document.body.classList.contains('studio-page'))enhanceAudio(audio);
   const media=[...content.querySelectorAll('audio,video')];media.forEach(item=>item.addEventListener('play',()=>media.filter(other=>other!==item).forEach(other=>other.pause())));
