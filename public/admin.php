@@ -10,7 +10,7 @@ $_SESSION['csrf'] ??= bin2hex(random_bytes(32));
 $message=''; $ready=false;
 try { $pdo=db(); $ready=$pdo && !empty($config['admin_password_hash']); if($ready) $pdo->query('SELECT 1 FROM login_attempts LIMIT 1'); }
 catch(Throwable $err){ $ready=false; }
-if(!empty($_SESSION['admin']) && ($_SESSION['last_seen']??0)<time()-1800) unset($_SESSION['admin']);
+if(!empty($_SESSION['admin']) && (($_SESSION['last_seen']??0)<time()-1800 || !hash_equals(hash('sha256',(string)($config['admin_password_hash']??'')),(string)($_SESSION['auth_version']??'')))) unset($_SESSION['admin']);
 if(!empty($_SESSION['admin'])) $_SESSION['last_seen']=time();
 if($_SERVER['REQUEST_METHOD']==='POST') {
  if(!hash_equals($_SESSION['csrf'], (string)($_POST['csrf']??''))) { http_response_code(403); exit('Oturum doğrulanamadı. Sayfayı yenileyin.'); }
@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD']==='POST') {
    if((int)$attempt['locked_until']>time()){$pdo->commit();$message='Çok fazla deneme. 15 dakika sonra tekrar deneyin.';http_response_code(429);}
    elseif(password_verify((string)($_POST['password']??''),$config['admin_password_hash'])) {
     $pdo->prepare('DELETE FROM login_attempts WHERE key_hash=?')->execute([$key]);$pdo->commit();
-    session_regenerate_id(true);$_SESSION['admin']=true;$_SESSION['last_seen']=time();$_SESSION['csrf']=bin2hex(random_bytes(32));header('Location: admin.php');exit;
+    session_regenerate_id(true);$_SESSION['admin']=true;$_SESSION['auth_version']=hash('sha256',$config['admin_password_hash']);$_SESSION['last_seen']=time();$_SESSION['csrf']=bin2hex(random_bytes(32));header('Location: admin.php');exit;
    } else {
     $count=(int)$attempt['locked_until']>0 ? 1 : (int)$attempt['attempts']+1;
     $pdo->prepare('UPDATE login_attempts SET attempts=?, locked_until=? WHERE key_hash=?')->execute([$count,$count>=5?time()+900:0,$key]);$pdo->commit();$message='Şifre doğru değil.';
@@ -75,7 +75,7 @@ $csrf='<input type="hidden" name="csrf" value="'.e($_SESSION['csrf']).'">';
 ?>
 <!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>İçerik stüdyosu — Dumansız Yaşam</title><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/admin.css?v=2"><script src="assets/admin.js" defer></script></head><body>
 <header class="admin-header"><a class="brand" href="/">≈ dumansız<span>yaşam</span></a><a href="/" target="_blank" rel="noopener">Siteyi görüntüle ↗</a></header>
-<?php if(!$ready||empty($_SESSION['admin'])): ?><main class="login-card"><p class="eyebrow">İÇERİK STÜDYOSU</p><h1>Yeniden hoş geldin.</h1><?php if($message): ?><p class="notice" role="status"><?=e($message)?></p><?php endif; ?><?php if(!$ready): ?><p>Önce veritabanı ve yönetici yapılandırmasını tamamlayın.</p><?php else: ?><form method="post"><?=$csrf?><input type="hidden" name="action" value="login"><label>Yönetici şifresi<input type="password" name="password" required autocomplete="current-password"></label><button class="primary">Giriş yap ↗</button></form><?php endif; ?></main>
+<?php if(!$ready||empty($_SESSION['admin'])): ?><main class="login-card"><p class="eyebrow">İÇERİK STÜDYOSU</p><h1>Yeniden hoş geldin.</h1><?php if($message): ?><p class="notice" role="status"><?=e($message)?></p><?php endif; ?><?php if(!$ready): ?><p>Önce veritabanı ve yönetici yapılandırmasını tamamlayın.</p><?php else: ?><form method="post"><?=$csrf?><input type="hidden" name="action" value="login"><label>Yönetici şifresi<input type="password" name="password" required autocomplete="current-password"></label><button class="primary">Giriş yap ↗</button></form><p class="hint"><a href="sifre-yenile.php">Şifremi unuttum ↗</a></p><?php endif; ?></main>
 <?php else: ?>
 <div class="admin-shell"><aside class="admin-sidebar"><p class="eyebrow">İÇERİK STÜDYOSU</p><h1>Kontrol sende.</h1><nav aria-label="Düzenlenecek bölüm"><a href="admin.php?tab=home" <?=$tab==='home'?'aria-current="page"':''?>><span>01</span>Ana sayfa</a><?php $n=2;foreach($categories as $key=>$label): ?><a href="admin.php?tab=<?=e($key)?>" <?=$tab===$key?'aria-current="page"':''?>><span>0<?=$n++?></span><?=e($label)?></a><?php endforeach; ?></nav><div class="sidebar-note"><span>Medyanı yükle.<br>Hikâyeni şekillendir.</span><p>Başlık ve dosyalar kaydedildiğinde site güncellenir.</p></div><form method="post"><?=$csrf?><input type="hidden" name="action" value="logout"><button class="logout">Güvenli çıkış ↗</button></form></aside>
 <main class="editor"><div class="editor-heading"><div><p class="eyebrow">DÜZENLE & YAYINLA</p><h2><?=$tab==='home'?'Ana sayfa medyası':e($categories[$tab])?></h2></div><a href="<?=$tab==='home'?'/':'rehber.php'?>" target="_blank" rel="noopener">Önizle ↗</a></div><?php if($message): ?><p class="notice" role="status"><?=e($message)?></p><?php endif; ?>

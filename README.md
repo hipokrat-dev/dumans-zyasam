@@ -64,3 +64,9 @@ Poliklinikler artık tek kart üzerinde gösterilir. İlçe seçimi merkez menü
 `etkiler.php` Para / Sağlık / Zaman seçimlerini ve günlük paket, yıl, fiyat kontrollerini içerir. Para bugünkü sabit fiyatla hesaplanır; her çuval 25.000 TL, çizim sınırı 18 çuvaldır ve fazlası sayıyla gösterilir. Zaman sigara içmeye ayrılan dakikadır, yaşam süresi kaybı değildir. Paket-yıla göre koyulaşan ve nefes hareketi yapan akciğer tıbbi tahmin değil, açıkça işaretlenmiş temsili animasyondur. Formüller ve CDC kaynakları isteğe bağlı pencerededir. Ziyaretçi girdileri saklanmaz.
 
 Admin içerik stüdyosunda ana sayfa medya/metinleri ve üç kategori düzenlenir. En fazla 24 konu, 70 karakter başlık ve isteğe bağlı 220 karakter açıklama desteklenir. Her konuya ses ve video yüklenebilir veya medya bağlantısı kaldırılabilir. İçerikler mevcut `settings` tablosunda `content_items` JSON kaydına, işlem kilidi ve doğrulama ile yazılır; şema değişikliği gerekmez. Dosya yükleme başarısız olursa işlem geri alınır ve yeni taşınmış dosyalar temizlenir. Başlık kaldırıldığında eski medya dosyaları yedekleme amacıyla tutulur.
+
+## Yönetici şifresi kurtarma
+
+`admin.php` giriş ekranındaki “Şifremi unuttum” bağlantısı `sifre-yenile.php` formunu açar. Site sahibi mevcut Hostinger veritabanı şifresini doğrular ve yeni yönetici şifresini kendisi girer. Form HTTPS, CSRF ve sunucu genelinde beş denemeden sonra 15 dakika bekleme ile korunur. Veritabanı bağlantısı korunarak yalnızca yönetici şifresinin özeti, özel yapılandırma dosyasına atomik olarak yazılır. Dosya izinleri 0600 kalır. Şifre değişikliğinde eski yönetici oturumları geçersizleşir. Veritabanı şifresi de unutulduysa bu form doğrulama yapamaz; Hostinger hesabı üzerinden sahiplik doğrulanarak ayrıca kurtarma gerekir.
+
+`php tests/recovery.php` yanlış doğrulama, şifre kuralları, atomik yapılandırma koruması ve yeni şifre özetini test eder.

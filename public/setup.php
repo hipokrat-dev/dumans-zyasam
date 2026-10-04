@@ -29,7 +29,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   $contents="<?php\nreturn ".var_export($data,true).";\n";
   if(fwrite($file,$contents)!==strlen($contents)){fclose($file);unlink($target);throw new RuntimeException('Yapılandırma yazılamadı.');}
   fflush($file);fclose($file);flock($lock,LOCK_UN);fclose($lock);
-  session_regenerate_id(true);$_SESSION['admin']=true;$_SESSION['last_seen']=time();$_SESSION['csrf']=bin2hex(random_bytes(32));unset($_SESSION['setup_csrf']);
+  session_regenerate_id(true);$_SESSION['admin']=true;$_SESSION['auth_version']=hash('sha256',$data['admin_password_hash']);$_SESSION['last_seen']=time();$_SESSION['csrf']=bin2hex(random_bytes(32));unset($_SESSION['setup_csrf']);
   header('Location: admin.php');exit;
  } catch(Throwable $err){$error=$err instanceof RuntimeException&&!($err instanceof PDOException)?$err->getMessage():'Kurulum tamamlanamadı.';flock($lock,LOCK_UN);fclose($lock);}
 }
