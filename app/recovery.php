@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 function replace_admin_password(string $target, string $proof, string $password, string $confirmation): void {
-    if (mb_strlen($password) < 12 || strlen($password) > 72) {
-        throw new RuntimeException('Yeni şifre en az 12 karakter, en fazla 72 bayt olmalı.');
+    if ($password === '' || strlen($password) > 72) {
+        throw new RuntimeException('Yeni şifre boş olamaz ve en fazla 72 bayt olabilir.');
     }
     if (!hash_equals($password, $confirmation)) {
         throw new RuntimeException('Yeni şifreler eşleşmiyor.');
