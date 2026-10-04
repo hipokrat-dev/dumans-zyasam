@@ -10,23 +10,29 @@ function calculate(){
 if(daily && price){daily.addEventListener('input',calculate);price.addEventListener('input',calculate);calculate();}
 const audio = document.querySelector('#ambience');
 const audioButton = document.querySelector('#audioToggle');
+const audioStatus = document.querySelector('#audioStatus');
 let userChoseAudio = false;
-if(audio){
- audio.volume = 0.25;
- const syncAudio = ()=>{audioButton.textContent=audio.paused?'♫ Sesi aç':'♫ Sesi kapat';audioButton.setAttribute('aria-pressed',String(!audio.paused));};
- audio.addEventListener('play',syncAudio);audio.addEventListener('pause',syncAudio);
- async function playAudio(){try{await audio.play();document.querySelector('#audioStatus').textContent='';}catch{document.querySelector('#audioStatus').textContent='Dinlemek için “Sesi aç”a dokun.';syncAudio();}}
- setTimeout(()=>{if(!userChoseAudio&&!document.hidden) playAudio();},2500);
+if(audio && audioButton){
+ audio.volume = 0.65;
+ const syncAudio = () => {
+  const label = audio.paused ? 'Sesi aç' : 'Sesi kapat';
+  audioButton.setAttribute('aria-label', label);
+  audioButton.title = label;
+  audioButton.setAttribute('aria-pressed', String(!audio.paused));
+ };
+ audio.addEventListener('play',syncAudio); audio.addEventListener('pause',syncAudio);
+ async function playAudio(){
+  try { await audio.play(); if(audioStatus) audioStatus.textContent=''; }
+  catch { if(audioStatus) audioStatus.textContent='Dinlemek için ses simgesine dokun.'; syncAudio(); }
+ }
+ setTimeout(()=>{if(!userChoseAudio && !document.hidden) playAudio();},2500);
  audioButton.addEventListener('click',()=>{userChoseAudio=true;if(audio.paused)playAudio();else audio.pause();});
- audio.addEventListener('error',()=>{document.querySelector('#audioStatus').textContent='Ses şu anda yüklenemedi.';});
+ audio.addEventListener('error',()=>{if(audioStatus) audioStatus.textContent='Ses şu anda yüklenemedi.';});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)audio.pause();});
+ syncAudio();
 }
 const video=document.querySelector('#heroVideo');
 if(video){
- const button=document.querySelector('#videoToggle');
- const sync=()=>button.textContent=video.paused?'Videoyu oynat':'Videoyu duraklat';
  if(matchMedia('(prefers-reduced-motion: reduce)').matches){video.autoplay=false;video.pause();}
- video.addEventListener('play',sync);video.addEventListener('pause',sync);sync();
- button.addEventListener('click',async()=>{if(video.paused){try{await video.play();}catch{button.textContent='Video yüklenemedi';}}else video.pause();});
  video.addEventListener('timeupdate',()=>{if(video.currentTime>=15)video.currentTime=0;});
 }

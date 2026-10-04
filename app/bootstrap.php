@@ -21,5 +21,6 @@ function settings(): array {
     try { if ($pdo = db()) foreach ($pdo->query('SELECT name, value FROM settings') as $row) if (array_key_exists($row['name'], $defaults)) $defaults[$row['name']] = $row['value']; }
     catch (Throwable $err) { error_log('Dumansiz: database settings unavailable'); }
     foreach (['video','audio'] as $key) if (!preg_match('~^uploads/[a-f0-9]{32}\.(mp4|webm|mp3|ogg|wav)$~', $defaults[$key])) $defaults[$key] = '';
+    if ($defaults['audio'] === '' && is_file(dirname(__DIR__).'/public/assets/media/ambience.mp3')) $defaults['audio'] = 'assets/media/ambience.mp3';
     return $defaults;
 }
