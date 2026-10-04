@@ -1,0 +1,8 @@
+/* Decorative lettering is part of the surface, not selectable page content. */
+body.relief-surface{background-color:#102c25;background-image:radial-gradient(ellipse at 50% 50%,#102c2550,transparent 72%),url('words-relief.svg');background-size:100% 100%,1500px 1000px;background-position:center,center;background-repeat:no-repeat,repeat;background-attachment:fixed}
+.relief-surface .app-header,.relief-surface .site-header{background:#102c25b8;backdrop-filter:blur(5px)}
+.relief-surface .app-footer,.relief-surface>footer{background:#102c257a}
+.relief-surface.discovery-page .guide-content{background:linear-gradient(145deg,#234333f5,#132e26f2)}
+.relief-surface .impact-total{background:radial-gradient(ellipse,#102c25c9,transparent 72%)}
+@media(max-width:700px){body.relief-surface{background-size:100% 100%,1000px 667px;background-position:center,45% center}}
+@media(prefers-contrast:more){body.relief-surface{background-image:none}}
