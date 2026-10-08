@@ -19,3 +19,6 @@ function request(path,mode='navigate',method='GET'){let result;handlers.fetch({r
  assert(!cache.has('/rehber.php'));assert.equal(cache.size,3);
  console.log('PWA manifest, icon sizes, offline navigation and private/media exclusions passed');
 })().catch(error=>{console.error(error);process.exitCode=1});
+
+const rootRules=fs.readFileSync(".htaccess","utf8");
+for(const route of ["manifest\\.webmanifest","sw\\.js","offline\\.html"])assert.ok(rootRules.includes(route), `Root routing missing ${route}`);
