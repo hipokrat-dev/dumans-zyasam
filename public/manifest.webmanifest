@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "Dumansız Hayat",
+  "short_name": "Dumansız Hayat",
+  "description": "Dumansız bir hayat için dinleme odan ve destek rehberin.",
+  "lang": "tr",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#17120e",
+  "theme_color": "#17120e",
+  "icons": [
+    {"src":"/assets/icons/app-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"/assets/icons/app-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ],
+  "shortcuts": [
+    {"name":"Dinleme odası","url":"/rehber.php"},
+    {"name":"Sigara Bırakma Poliklinikleri","url":"/poliklinikler.php"}
+  ]
+}

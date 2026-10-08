@@ -20,3 +20,6 @@ jobs:
       - run: node --check public/assets/admin.js
       - run: php tests/recovery.php
       - run: node tests/home-audio.cjs
+      - run: node --check public/sw.js
+      - run: node --check public/assets/pwa.js
+      - run: node tests/pwa.cjs
