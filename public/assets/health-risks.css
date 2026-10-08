@@ -1,0 +1,35 @@
+/* One fact at a time: no personal-risk interpolation or percentage gauge. */
+.health-mode .impact-stage{grid-template-rows:minmax(0,1fr);padding:0}
+.health-mode .impact-total,.health-mode .visual-bottom{display:none}
+.health-mode .calculation-info{float:none;margin:8px 0 0;max-width:none;font-size:14px;min-height:36px}
+.health-mode #health-visual{display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:14px;max-height:680px;width:100%;align-self:center;align-items:stretch;justify-content:stretch}
+.risk-picker{display:grid;grid-template-columns:1fr .7fr 1.3fr;gap:9px}
+.risk-picker button{min-height:52px;border:1px solid #efb97955;border-radius:16px;padding:10px;color:#f5e4d0;background:#2a2526;font-size:16px;font-weight:700;box-shadow:0 4px 0 #0c0d11}
+.risk-picker button[aria-selected=true]{color:#321f1b;background:linear-gradient(135deg,#ffd2ad,#de936a);border-color:#ffe0c4;box-shadow:0 4px 0 #92533d,0 8px 24px #0004}
+.risk-card{position:relative;isolation:isolate;min-height:0;height:100%;overflow:auto;padding:clamp(20px,3vw,40px);border-radius:28px;border:1px solid #d9957659;background:radial-gradient(ellipse at 100% 0,#d9804e28,transparent 60%),linear-gradient(135deg,#34272a,#201f27);box-shadow:inset 0 1px 0 #fff1,0 8px 0 #101015,0 22px 44px #0005;display:flex;flex-direction:column;justify-content:center;animation:risk-reveal .35s ease-out}
+.risk-card:before{content:"";position:absolute;z-index:-1;width:240px;height:240px;right:-120px;top:-120px;border:1px solid #edbb8b22;border-radius:50%;box-shadow:0 0 0 26px #edbb8b06,0 0 0 55px #edbb8b04;pointer-events:none}
+.risk-kicker{font-size:12px;font-weight:700;letter-spacing:1.5px;color:#e9b79a}
+.risk-card h2{font-size:clamp(24px,2.3vw,36px);font-weight:400;line-height:1.15;letter-spacing:-1px;margin:14px 0 8px;color:#fff1e6}
+.risk-card h2 em{font-family:Georgia,serif;font-weight:400;color:#ffca9f}
+.risk-number{font-size:clamp(56px,6.8vw,96px);letter-spacing:-4px;line-height:1.05;font-weight:700;color:#ffbd94;text-shadow:0 4px 30px #ff9d5426;margin:8px 0}
+.risk-number span{font-size:28px;letter-spacing:-1px;font-weight:400}.risk-number small{display:block;font-size:13px;letter-spacing:1px;line-height:1.3;font-weight:400;color:#dbb6a6}
+.risk-comparison{font-size:16px;line-height:1.4;color:#fff1e6;margin:4px 0}.risk-context{font-size:13px;line-height:1.5;color:#c8b3ad;margin:6px 0 14px;max-width:480px}
+.risk-turn{border-left:3px solid #eac18b;background:#f0bd780c;padding:12px 16px;margin:4px 0 16px;border-radius:0 12px 12px 0}.risk-turn>span{font-size:10px;font-weight:700;letter-spacing:1.3px;color:#edbf87}.risk-turn p{font-size:15px;line-height:1.4;margin:5px 0 0;color:#f6dfbf}
+.risk-source{font-size:12px;color:#e4b898;text-decoration:underline;text-underline-offset:4px;align-self:flex-start;padding:5px 0;min-height:30px}
+.risk-footnote{font-size:12px;line-height:1.4;color:#cbbdb1;text-align:center;margin:3px 0 0}.risk-footnote button{background:none;border:0;color:#ffcf9c;font-size:12px;text-decoration:underline;min-height:32px;padding:4px}
+@keyframes risk-reveal{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:700px){
+ .health-mode .impact-screen{padding:12px 5% 8px;gap:6px}.health-mode .impact-controls h1{font-size:28px}.health-mode .impact-tabs{margin:10px 0 4px}.health-mode .calculation-info{display:none}
+ .health-mode #health-visual{gap:10px;max-height:none}.risk-picker{gap:6px}.risk-picker button{min-height:44px;font-size:14px;padding:8px 5px;border-radius:13px}
+ .risk-card{padding:20px 21px;border-radius:22px}.risk-kicker{font-size:10px;letter-spacing:1px}.risk-card h2{font-size:27px;margin:10px 0 6px}.risk-number{font-size:64px;margin:6px 0;letter-spacing:-3px}.risk-number span{font-size:25px}.risk-number small{font-size:12px}
+ .risk-comparison{font-size:14px}.risk-context{font-size:12px;margin:4px 0 9px}.risk-turn{padding:10px 12px;margin:4px 0 8px}.risk-turn p{font-size:13px}.risk-turn>span{font-size:9px}.risk-source{font-size:11px;min-height:28px}.risk-footnote,.risk-footnote button{font-size:11px}
+}
+@media(max-width:700px) and (max-height:740px){
+ .health-mode .impact-controls h1{font-size:24px}.health-mode .impact-tabs{margin:7px 0 3px}.health-mode .impact-screen{padding-top:8px}.health-mode #health-visual{gap:7px}.risk-card{padding:13px 17px}.risk-card h2{font-size:23px;margin:5px 0}.risk-number{font-size:49px;margin:3px 0}.risk-number span{font-size:21px}.risk-context{font-size:11px;line-height:1.3;margin:3px 0 5px}.risk-turn{padding:7px 10px;margin:3px 0 4px}.risk-turn p{font-size:12px;margin-top:3px}.risk-comparison{font-size:12px}.risk-source{font-size:10px}.risk-footnote{font-size:10px;line-height:1.2}.risk-footnote button{font-size:11px;min-height:28px}.risk-picker button{min-height:42px}
+}
+@media(min-width:701px) and (max-height:650px){.risk-card{padding:18px 24px}.risk-card h2{font-size:25px;margin:7px 0}.risk-number{font-size:60px;margin:2px 0}.risk-context{margin:3px 0 6px}.risk-turn{margin:2px 0 6px;padding:8px 12px}.health-mode #health-visual{gap:8px}.risk-picker button{min-height:44px}}
+@media(prefers-reduced-motion:reduce){.risk-card{animation:none}}
+@media(min-width:701px) and (max-height:800px){.risk-card{padding:20px 28px}.risk-card h2{font-size:29px;margin:8px 0 4px}.risk-number{font-size:76px;margin:3px 0}.risk-context{margin:3px 0 8px}.risk-turn{padding:9px 14px;margin:3px 0 8px}}
+/* Start at the top on unusually small/zoomed viewports; keep all content reachable. */
+.risk-card{justify-content:safe center}
+@media(max-width:700px){.pwa-standalone.health-mode .app-header nav,.pwa-standalone.health-mode .app-footer{display:none}.pwa-standalone.health-mode .impact-screen{grid-row:2 / -1}}

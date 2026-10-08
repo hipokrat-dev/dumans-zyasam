@@ -23,25 +23,28 @@
   }
   $('#bag-overflow').textContent=count>18?`+ ${format(count-18)} çuval`:(count===0?'Henüz harcama yok':`${format(count)} çuval`);
  }
- for(let i=0;i<52;i++)$('#lung-soot').append(svg('ellipse',{cx:65+(i*71)%310,cy:73+(i*47)%219,rx:8+i%7*3,ry:7+i%5*4,fill:'url(#soot-color)'}));
  function update(){
   const valid=inputs.every(el=>el.value!==''&&el.checkValidity());const totals=valid?impactTotals(...inputs.map(el=>Number(el.value))):null;
   $('#packs-label').textContent=format(Number(inputs[0].value))+' paket';$('#years-label').textContent=inputs[1].value+' yıl';
   tabs.forEach(t=>{const selected=t.dataset.impact===mode;t.setAttribute('aria-selected',String(selected));t.tabIndex=selected?0:-1;});
   $('#impact-panel').setAttribute('aria-labelledby',`tab-${mode}`);
-  ['money','health','time'].forEach(key=>$(`#${key}-visual`).hidden=key!==mode||!totals);
-  const labels={money:['SİGARAYA AYRILAN PARA','Bugünkü paket fiyatıyla tahmini toplam.','Her çuval 25.000 ₺. Doluluk kalan tutarı gösterir.'],health:['BİRİKEN MARUZİYET','Günlük paket × kullanım yılı.','Miktar ve süre arttıkça sağlık riski artar.'],time:['SİGARAYA AYRILAN ZAMAN','Sigara başına '+inputs[3].value+' dakika varsayımıyla.','Bu süre, sigara içmeye ayrılan zamandır.']};
+  document.body.classList.toggle('health-mode',mode==='health');
+  $('.sliders').hidden=mode==='health';
+  $('#assumptions-open').textContent=mode==='health'?'İstatistikler ve kaynaklar ↗':'Hesaplama ve kaynaklar ↗';
+  ['money','health','time'].forEach(key=>$(`#${key}-visual`).hidden=key!==mode||(key!=='health'&&!totals));
+  const labels={money:['SİGARAYA AYRILAN PARA','Bugünkü paket fiyatıyla tahmini toplam.','Her çuval 25.000 ₺. Doluluk kalan tutarı gösterir.'],health:['SİGARANIN SAĞLIK BEDELİ','Araştırmalardaki karşılaştırmalar.','Kişisel risk hesabı değildir.'],time:['SİGARAYA AYRILAN ZAMAN','Sigara başına '+inputs[3].value+' dakika varsayımıyla.','Bu süre, sigara içmeye ayrılan zamandır.']};
   $('#metric-label').textContent=labels[mode][0];$('#metric-caption').textContent=totals?labels[mode][1]:'Lütfen geçerli değerler gir.';$('#visual-caption').textContent=labels[mode][2];
-  $('#metric-value').textContent=!totals?'—':mode==='money'?money(totals.money):mode==='health'?format(totals.packYears)+' paket-yıl':format(totals.hours)+' saat';
+  $('#metric-value').textContent=!totals?'—':mode==='money'?money(totals.money):mode==='health'?'Araştırma verileri':format(totals.hours)+' saat';
   if(!totals)return;
   drawBags(totals.money);
-  const exposure=1-Math.exp(-totals.packYears/22);
-  $('#lung-soot').setAttribute('opacity',String(exposure*.9));$('#lung-shade').setAttribute('opacity',String(exposure*.55));
-  $('.lung-organ').style.setProperty('--breath-scale',String(1.04-exposure*.025));
   $('#time-days').textContent=format(totals.days)+' gün';
   $('#clock-progress').setAttribute('stroke-dasharray',`${Math.min(1,totals.hours/10000)*603} 603`);
  }
  inputs.forEach(el=>el.addEventListener('input',update));
  tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>{mode=tab.dataset.impact;update();});tab.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%3;else if(e.key==='ArrowLeft')n=(i+2)%3;else return;e.preventDefault();tabs[n].focus();mode=tabs[n].dataset.impact;update();});});
+ const riskTabs=[...document.querySelectorAll('[data-risk]')];
+ function selectRisk(tab){riskTabs.forEach(t=>{const active=t===tab;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;$('#risk-'+t.dataset.risk).hidden=!active;});}
+ riskTabs.forEach((tab,i)=>{tab.addEventListener('click',()=>selectRisk(tab));tab.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%riskTabs.length;else if(e.key==='ArrowLeft')n=(i+riskTabs.length-1)%riskTabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=riskTabs.length-1;else return;e.preventDefault();riskTabs[n].focus();selectRisk(riskTabs[n]);});});
+ $('#risk-details').addEventListener('click',()=>$('#assumptions-dialog').showModal());
  $('#assumptions-open').addEventListener('click',()=>$('#assumptions-dialog').showModal());$('#assumptions-close').addEventListener('click',()=>$('#assumptions-dialog').close());update();
 })();
