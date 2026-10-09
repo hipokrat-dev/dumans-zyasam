@@ -23,3 +23,5 @@ jobs:
       - run: node --check public/sw.js
       - run: node --check public/assets/pwa.js
       - run: node tests/pwa.cjs
+      - run: php tests/listening.php
+      - run: node tests/listening.cjs

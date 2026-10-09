@@ -8,3 +8,9 @@ CREATE TABLE IF NOT EXISTS login_attempts (
  attempts INT NOT NULL DEFAULT 0,
  locked_until BIGINT NOT NULL DEFAULT 0
 ) CHARACTER SET ascii;
+
+CREATE TABLE IF NOT EXISTS audio_listens (
+ audio_key CHAR(64) NOT NULL PRIMARY KEY,
+ plays BIGINT NOT NULL DEFAULT 0,
+ last_listened BIGINT NOT NULL DEFAULT 0
+);

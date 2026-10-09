@@ -40,6 +40,7 @@
   if(episodeInfo){episodeInfo.hidden=!template;document.querySelector('#episode-dialog-title').textContent=content.querySelector('h2')?.textContent||'';document.querySelector('#episode-dialog-text').textContent=content.querySelector('article>p')?.textContent||'';}
   const dialog=content.querySelector('.topic-video-dialog');if(dialog){content.querySelector('.topic-video-open').addEventListener('click',()=>{stopMedia();dialog.showModal();});content.querySelector('.topic-video-close').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',stopMedia);}
   const audio=content.querySelector('audio');if(audio&&document.body.classList.contains('studio-page'))enhanceAudio(audio);
+  if(audio&&template)window.DumansizListening?.track(audio,{id:template.dataset.id,audio:audio.getAttribute('src')});
   const media=[...content.querySelectorAll('audio,video')];media.forEach(item=>item.addEventListener('play',()=>media.filter(other=>other!==item).forEach(other=>other.pause())));
   document.querySelector('#topic-count').textContent=available.length?`${topic.selectedIndex+1} / ${available.length}`:'0 / 0';
   document.querySelector('#topic-prev').disabled=topic.selectedIndex<=0;

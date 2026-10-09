@@ -76,3 +76,11 @@ Keşfet ekranında yalnızca `kancalar` ve `motivasyon` kategorileri gösterilir
 ## Görselli açılış ekranı
 
 Ana sayfa video veya ses oynatmaz; kullanıcı görseli `assets/media/freedom-key.png` orijinal 1448×1086 çözünürlükte gösterilir. Slogan “Özgürlüğünün anahtarı senin elinde.” şeklindedir. Yönetimde Ana sayfa bölümünden iki slogan satırı ve PNG/JPG/WebP görsel güncellenebilir. Önceden yüklenen video ve sesler silinmez, ancak açılış ekranında kullanılmaz. Bölüm sesleri çalışmaya devam eder.
+
+## Dinlenme istatistikleri
+
+Yönetici panelindeki `admin.php?tab=listens` yalnızca giriş yapmış yöneticiye mevcut seslerin sayısını ve sıralamasını gösterir. `audio_listens` tablosu ilk rapor veya dinlenme kaydında otomatik oluşturulur; mevcut içerik ve dosyalar değiştirilmez.
+
+En az 10 saniye aktif, oynatıcıda sesi açık dinleme sayılır. Aynı geçici tarayıcı oturumunda aynı kayıt için 30 dakikalık tekrar engeli vardır. Kısa kayıtlar, çevrimdışı olaylar ve yönetici önizlemeleri sayılmaz. Bu ölçüm tekil kişi ya da sahteciliğe dayanıklı reklam metriği değildir. Geçmiş dinlemeler geri getirilemez. Ses dosyası değişince yeni sayaç kullanılır; başlık değişince korunur. İsim/IP bilgisi tabloya kaydedilmez. `dumansiz_listen` HttpOnly, SameSite=Strict oturum çerezi yalnızca oynatma başlayınca açılır.
+
+Kontrol: `php tests/listening.php` ve `node tests/listening.cjs`.
