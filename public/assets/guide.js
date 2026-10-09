@@ -5,6 +5,27 @@
  let selectedCategory=tabs[0]?.dataset.category,available=[],playbackVolume=1;
  const imageDialog=document.querySelector('#studio-image-dialog');
  if(imageDialog){document.querySelector('.studio-room-expand').addEventListener('click',()=>imageDialog.showModal());document.querySelector('#studio-image-close').addEventListener('click',()=>imageDialog.close());}
+ const picker=document.querySelector('#episode-picker'),pickerOpen=document.querySelector('#episode-picker-open'),pickerList=document.querySelector('#episode-picker-list');
+ if(picker&&pickerOpen){
+  pickerOpen.addEventListener('click',()=>{picker.showModal();pickerOpen.setAttribute('aria-expanded','true');(pickerList.querySelector('[aria-pressed="true"]')||pickerList.querySelector('button'))?.focus();});
+  document.querySelector('#episode-picker-close').addEventListener('click',()=>picker.close());
+  picker.addEventListener('close',()=>{pickerOpen.setAttribute('aria-expanded','false');pickerOpen.focus();});
+  picker.addEventListener('click',event=>{if(event.target===picker){const rect=picker.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)picker.close();}});
+  pickerList.addEventListener('keydown',event=>{const buttons=[...pickerList.querySelectorAll('button')],index=buttons.indexOf(document.activeElement);let next;if(event.key==='ArrowDown')next=(index+1)%buttons.length;else if(event.key==='ArrowUp')next=(index+buttons.length-1)%buttons.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=buttons.length-1;else return;event.preventDefault();buttons[next]?.focus();});
+ }
+ function updatePicker(){
+  if(!pickerOpen)return;
+  pickerOpen.disabled=!available.length;
+  document.querySelector('#episode-picker-value').textContent=available[topic.selectedIndex]?.dataset.title||'Henüz bölüm eklenmedi';
+  document.querySelector('#episode-picker-category').textContent=`${tabs.find(tab=>tab.dataset.category===selectedCategory)?.getAttribute('aria-label')||''} · ${available.length} bölüm`;
+  pickerList.replaceChildren(...available.map((template,index)=>{
+   const button=document.createElement('button');button.type='button';button.className='episode-choice';button.setAttribute('aria-pressed',String(index===topic.selectedIndex));
+   const number=document.createElement('span');number.className='episode-choice-number';number.textContent=String(index+1).padStart(2,'0');number.setAttribute('aria-hidden','true');
+   const title=document.createElement('span');title.className='episode-choice-title';title.textContent=template.dataset.title;
+   const indicator=document.createElement('span');indicator.className='episode-choice-indicator';indicator.textContent=index===topic.selectedIndex?'✓':'↗';indicator.setAttribute('aria-hidden','true');
+   button.append(number,title,indicator);button.addEventListener('click',()=>{topic.selectedIndex=index;render();picker.close();});return button;
+  }));
+ }
  const studioStatus=document.querySelector('#studio-status');
  const episodeInfo=document.querySelector('#episode-info'),episodeDialog=document.querySelector('#episode-dialog');
  if(episodeInfo&&episodeDialog){episodeInfo.addEventListener('click',()=>episodeDialog.showModal());document.querySelector('#episode-dialog-close').addEventListener('click',()=>episodeDialog.close());}
@@ -14,7 +35,7 @@
 
  function stopMedia(){document.querySelectorAll('#topic-content audio,#topic-content video').forEach(media=>media.pause());}
  function render(){
-  stopMedia();setStudioPlaying(false);content.replaceChildren();const template=available[topic.selectedIndex];
+  updatePicker();stopMedia();setStudioPlaying(false);content.replaceChildren();const template=available[topic.selectedIndex];
   if(template)content.append(template.content.cloneNode(true));else{const p=document.createElement('p');p.textContent='Bu bölüme henüz başlık eklenmedi.';content.append(p);}
   if(episodeInfo){episodeInfo.hidden=!template;document.querySelector('#episode-dialog-title').textContent=content.querySelector('h2')?.textContent||'';document.querySelector('#episode-dialog-text').textContent=content.querySelector('article>p')?.textContent||'';}
   const dialog=content.querySelector('.topic-video-dialog');if(dialog){content.querySelector('.topic-video-open').addEventListener('click',()=>{stopMedia();dialog.showModal();});content.querySelector('.topic-video-close').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',stopMedia);}
