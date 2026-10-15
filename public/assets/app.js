@@ -31,7 +31,7 @@ if(sound && audioButton){
  async function playSound(){
   const action=++soundAction;
   sound.muted=false;
-  try{await sound.play();if(action===soundAction&&audioStatus)audioStatus.textContent='';}
+  try{await sound.play();if(action!==soundAction){if(sound===audio)sound.pause();return;}if(audioStatus)audioStatus.textContent='';}
   catch{
    if(action!==soundAction)return;
    if(audioStatus)audioStatus.textContent='Sesi açmak için ses simgesine dokun.';

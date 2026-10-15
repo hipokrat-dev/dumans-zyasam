@@ -6,3 +6,9 @@
 @media(max-width:700px) and (max-height:700px){.hero-message{top:126px}.eyebrow{font-size:6px;margin-bottom:9px}h1{font-size:31px}.hero-image{object-position:43% center}.hero-cta{bottom:65px;padding:11px 17px}}
 @media(max-height:450px) and (min-width:701px){.home-header{padding-top:12px}.brand{font-size:20px}.home-header nav a{min-height:44px;padding:8px 12px;font-size:12px}.hero-message{top:24%;right:4%;width:34%}.eyebrow{font-size:6px;letter-spacing:1.4px;margin-bottom:8px}h1{font-size:31px}.hero-cta{margin-top:15px;padding:10px 15px;font-size:10px}footer{padding-top:5px;padding-bottom:5px}.hero-image{object-position:center 70%}}
 @media(prefers-reduced-motion:reduce){.hero-cta,.home-header nav a{transition:none}.hero-cta,.home-header nav a{animation:none;--nav-beam:45deg}}
+
+.home-sound{position:absolute;right:4.5%;bottom:90px;z-index:5}
+.home-sound.controls .sound-toggle{width:46px;height:46px;background:#30241980;border:1px solid #efd7af70;color:#fff0d9;box-shadow:0 4px 20px #1a10082b,inset 0 1px 0 #ffe4bb21;backdrop-filter:blur(12px)}
+.home-sound.controls .sound-toggle:hover{background:#7053329c;color:#fff8e9}
+.home-sound.controls .sound-toggle:focus-visible{outline:2px solid #ffe4b2;outline-offset:4px}
+@media(max-width:700px){.home-sound{top:calc(10px + env(safe-area-inset-top));right:6%;bottom:auto}.home-header>.brand{padding-right:50px}.home-sound.controls .sound-toggle{width:44px;height:44px}}
