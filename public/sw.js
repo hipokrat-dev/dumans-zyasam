@@ -1,7 +1,7 @@
-const CACHE='dumansiz-pwa-v1';
+const CACHE='dumansiz-pwa-v2';
 const OFFLINE='/offline.html';
-const SHELL=[OFFLINE,'/assets/pwa.css?v=1','/assets/icons/app-192.png'];
-const PUBLIC_PAGES=new Set(['/','/index.php','/rehber.php','/etkiler.php','/poliklinikler.php']);
+const SHELL=[OFFLINE,'/assets/pwa.css?v=2','/assets/icons/app-192.png'];
+const PUBLIC_PAGES=new Set(['/','/index.php','/rehber.php','/etkiler.php','/birakirsan.php','/poliklinikler.php']);
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('dumansiz-pwa-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',event=>{

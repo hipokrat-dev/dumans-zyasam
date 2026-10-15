@@ -1,7 +1,7 @@
 (() => {
  const $=s=>document.querySelector(s),ns='http://www.w3.org/2000/svg';
  const tabs=[...document.querySelectorAll('[data-impact]')],inputs=['#packs','#years','#pack-price','#minutes'].map($);
- let mode='money',lastMoney=-1,savingDays=365;
+ let mode='money',lastMoney=-1;
  const precise=n=>new Intl.NumberFormat('tr-TR',{maximumFractionDigits:2}).format(n);
  const format=n=>new Intl.NumberFormat('tr-TR',{maximumFractionDigits:1}).format(n);
  const money=n=>new Intl.NumberFormat('tr-TR',{maximumFractionDigits:0}).format(n)+' ₺';
@@ -30,23 +30,14 @@
   tabs.forEach(t=>{const selected=t.dataset.impact===mode;t.setAttribute('aria-selected',String(selected));t.tabIndex=selected?0:-1;});
   $('#impact-panel').setAttribute('aria-labelledby',`tab-${mode}`);
   document.body.classList.toggle('health-mode',mode==='health');
-  document.body.classList.toggle('recovery-mode',mode==='recovery');
   document.body.classList.toggle('time-mode',mode==='time');
-  $('#impact-heading').innerHTML=mode==='recovery'?'Bugün bırak. <br><em>Hayatın sana kalsın.</em>':'Hayatından <br><em>neler gidiyor?</em>';
-  $('#quit-savings').hidden=mode!=='recovery';
-  $('#years').hidden=mode==='recovery';
-  $('label[for=years]').hidden=mode==='recovery';
   $('#cost-rates').hidden=mode!=='money'||!totals;
   $('.sliders').hidden=mode==='health';
   $('#assumptions-open').textContent=mode==='health'?'İstatistikler ve kaynaklar ↗':'Hesaplama ve kaynaklar ↗';
-  ['money','health','time','recovery'].forEach(key=>$(`#${key}-visual`).hidden=key!==mode||(['money','time'].includes(key)&&!totals));
-  const labels={money:['SİGARAYA AYRILAN PARA','Bugünkü paket fiyatıyla tahmini toplam.','Her çuval 25.000 ₺. Doluluk kalan tutarı gösterir.'],health:['SİGARANIN SAĞLIK BEDELİ','Araştırmalardaki karşılaştırmalar.','Kişisel risk hesabı değildir.'],recovery:['BIRAKINCA KAZANDIKLARIN','İlk dakikalardan yıllara uzanan değişim.','Her dumansız gün bir kazanım.'],time:['SİGARAYA AYRILAN ZAMAN','Sigara başına '+inputs[3].value+' dakika varsayımıyla.','Aynı sürenin farklı karşılıkları: 1 ay = 30 gün, 1 yıl = 365 gün.']};
-  $('#metric-label').textContent=labels[mode][0];$('#metric-caption').textContent=(totals||mode==='health'||mode==='recovery')?labels[mode][1]:'Lütfen geçerli değerler gir.';$('#visual-caption').textContent=labels[mode][2];
+  ['money','health','time'].forEach(key=>$(`#${key}-visual`).hidden=key!==mode||(['money','time'].includes(key)&&!totals));
+  const labels={money:['SİGARAYA AYRILAN PARA','Bugünkü paket fiyatıyla tahmini toplam.','Her çuval 25.000 ₺. Doluluk kalan tutarı gösterir.'],health:['SİGARANIN SAĞLIK BEDELİ','Araştırmalardaki karşılaştırmalar.','Kişisel risk hesabı değildir.'],time:['SİGARAYA AYRILAN ZAMAN','Sigara başına '+inputs[3].value+' dakika varsayımıyla.','Aynı sürenin farklı karşılıkları: 1 ay = 30 gün, 1 yıl = 365 gün.']};
+  $('#metric-label').textContent=labels[mode][0];$('#metric-caption').textContent=(totals||mode==='health')?labels[mode][1]:'Lütfen geçerli değerler gir.';$('#visual-caption').textContent=labels[mode][2];
   $('#metric-value').textContent=!totals?'—':mode==='money'?money(totals.money):mode==='health'?'Araştırma verileri':format(totals.hours)+' saat';
-  const savings=quitSavings(Number(inputs[0].value),savingDays,Number(inputs[2].value),Number(inputs[3].value));
-  const savingsValid=[inputs[0],inputs[2],inputs[3]].every(el=>el.value!==''&&el.checkValidity())&&savings;
-  $('#saved-money').textContent=savingsValid?money(savings.money):'—';
-  $('#saved-time').textContent=savingsValid?precise(savings.hours)+' saat':'—';
   if(!totals)return;
   const daily=Number(inputs[0].value)*Number(inputs[2].value);
   [['hour',daily/24],['day',daily],['month',daily*30],['year',daily*365]].forEach(([unit,value])=>$('#cost-'+unit).textContent=precise(value)+' ₺');
@@ -60,34 +51,6 @@
  const riskTabs=[...document.querySelectorAll('[data-risk]')];
  function selectRisk(tab){riskTabs.forEach(t=>{const active=t===tab;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1;$('#risk-'+t.dataset.risk).hidden=!active;});}
  riskTabs.forEach((tab,i)=>{tab.addEventListener('click',()=>selectRisk(tab));tab.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight')n=(i+1)%riskTabs.length;else if(e.key==='ArrowLeft')n=(i+riskTabs.length-1)%riskTabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=riskTabs.length-1;else return;e.preventDefault();riskTabs[n].focus();selectRisk(riskTabs[n]);});});
- const who='https://www.who.int/news-room/questions-and-answers/item/tobacco-health-benefits-of-smoking-cessation';
- const cdc='https://www.cdc.gov/tobacco/about/benefits-of-quitting.html';
- const milestones=[
-  ['20 dakika','İlk değişim kalbinde.','Nabzın ve tansiyonun düşmeye başlar.',who],
-  ['Birkaç gün','Kanındaki yük hafifler.','Karbonmonoksit düzeyi, sigara içmeyen birinin düzeyine iner.',cdc],
-  ['2–12 hafta','Hareket etmek kolaylaşır.','Dolaşımın iyileşir, akciğer işlevlerin artar.',who],
-  ['1–12 ay','Nefesine alan açılır.','Öksürük ve nefes darlığı azalır.',cdc],
-  ['1–2 yıl','Kalbin için büyük bir adım.','Kalp krizi riski belirgin biçimde düşer.',cdc],
-  ['3–6 yıl','Riskin yönü değişir.','Koroner kalp hastalığı için ek risk yaklaşık yarıya iner.',cdc],
-  ['10–15 yıl','Uzun vadede de kazanırsın.','Akciğer kanseri için ek risk yaklaşık yarıya iner. Ek risk, temel riskin üzerindeki kısımdır.',cdc],
-  ['15 yıl','Kalbin yeni bir geleceğe yaklaşır.','Koroner kalp hastalığı riski, sigara içmeyen birinin riskine yaklaşır.',cdc]
- ];
- function showRecovery(index){
-  index=Math.max(0,Math.min(milestones.length-1,index));
-  const [time,title,description,source]=milestones[index];
-  $('#recovery-time').textContent=time;$('#recovery-title').textContent=title;$('#recovery-description').textContent=description;
-  $('#recovery-source').href=source;$('#recovery-source').textContent='Kaynak · '+(source===who?'Dünya Sağlık Örgütü':'CDC')+' ↗';
-  $('#recovery-count').textContent=(index+1)+' / '+milestones.length;
-  $('#recovery-step').value=index;$('#recovery-step').setAttribute('aria-valuetext',time);
-  $('#recovery-prev').disabled=index===0;$('#recovery-next').disabled=index===milestones.length-1;
- }
- $('#recovery-step').addEventListener('input',e=>showRecovery(Number(e.target.value)));
- $('#recovery-prev').addEventListener('click',()=>showRecovery(Number($('#recovery-step').value)-1));
- $('#recovery-next').addEventListener('click',()=>showRecovery(Number($('#recovery-step').value)+1));
- document.querySelectorAll('[data-saving-days]').forEach(button=>button.addEventListener('click',()=>{
-  savingDays=Number(button.dataset.savingDays);document.querySelectorAll('[data-saving-days]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));update();
- }));
- $('#recovery-details').addEventListener('click',()=>$('#assumptions-dialog').showModal());
  $('#risk-details').addEventListener('click',()=>$('#assumptions-dialog').showModal());
  $('#assumptions-open').addEventListener('click',()=>$('#assumptions-dialog').showModal());$('#assumptions-close').addEventListener('click',()=>$('#assumptions-dialog').close());update();
 })();
