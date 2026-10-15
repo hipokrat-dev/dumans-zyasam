@@ -12,3 +12,8 @@
 .home-sound.controls .sound-toggle:hover{background:#7053329c;color:#fff8e9}
 .home-sound.controls .sound-toggle:focus-visible{outline:2px solid #ffe4b2;outline-offset:4px}
 @media(max-width:700px){.home-sound{top:calc(10px + env(safe-area-inset-top));right:6%;bottom:auto}.home-header>.brand{padding-right:50px}.home-sound.controls .sound-toggle{width:44px;height:44px}}
+
+/* The sound control uses the same orbiting gold beam as the main navigation. */
+.home-sound.controls .sound-toggle{border:2px solid transparent;background:linear-gradient(135deg,#493623,#251d17) padding-box,conic-gradient(from var(--nav-beam),#ae814940 0deg,#ae814940 225deg,#eab05b 285deg,#fff7d8 320deg,#f5c47b 340deg,#ae814940 360deg) border-box;box-shadow:0 0 16px #f6bd6345,0 4px 18px #100c0955,inset 0 1px 0 #fff2;animation:nav-beam-orbit 3.5s linear infinite}
+.home-sound.controls .sound-toggle:hover{background:linear-gradient(135deg,#60462e,#302219) padding-box,conic-gradient(from var(--nav-beam),#ae814940 0deg,#ae814940 225deg,#eab05b 285deg,#fff7d8 320deg,#f5c47b 340deg,#ae814940 360deg) border-box;box-shadow:0 0 24px #f6bd6370,0 4px 18px #100c0955,inset 0 1px 0 #fff2}
+@media(prefers-reduced-motion:reduce){.home-sound.controls .sound-toggle{animation:none;--nav-beam:45deg}}
